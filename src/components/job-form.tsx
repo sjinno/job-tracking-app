@@ -1,4 +1,7 @@
+import { TriangleAlert } from 'lucide-react';
 import { useJobForm } from '../hooks';
+import { cn } from '../lib';
+import { ChangeEventHandler } from '../types';
 import { Button } from './button';
 
 export function JobForm() {
@@ -7,36 +10,94 @@ export function JobForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="customer-name">Add a customer name </label>
-        <input
-          type="text"
-          name="customer-name"
-          id="customer-name"
-          value={customerName}
-          onChange={(e) =>
-            dispatch({ type: 'changed_name', nextName: e.target.value })
-          }
-        />
-        {errors?.has('customerName') && (
-          <p className="text-red-600">{errors.get('customerName')}</p>
-        )}
-      </div>
-      <div>
-        <label htmlFor="description">Add a dscription </label>
-        <input
-          type="text"
-          name="description"
-          id="description"
-          value={description}
-          onChange={(e) =>
-            dispatch({ type: 'changed_desc', nextDesc: e.target.value })
-          }
-        />
-      </div>
-      <Button type="submit" className="bg-green-600 text-white">
+      <InputField
+        label="Add a customer name"
+        name="customer-name"
+        value={customerName}
+        onChange={(e) =>
+          dispatch({ type: 'changed_name', nextName: e.target.value })
+        }
+        placeholder="Title"
+        error={errors?.get('customerName')}
+      />
+      <InputField
+        label="Add a description"
+        name="description"
+        value={description}
+        onChange={(e) =>
+          dispatch({ type: 'changed_desc', nextDesc: e.target.value })
+        }
+        placeholder="Type your description here..."
+        variant="large-text"
+      />
+      <Button type="submit" className="bg-green-700 text-white border-none">
         Create
       </Button>
     </form>
+  );
+}
+
+type InputVariant = 'text' | 'large-text';
+
+type InputProps = {
+  name: string;
+  value: string;
+  onChange: ChangeEventHandler;
+  placeholder?: string;
+};
+
+type InputFieldProps = InputProps & {
+  label: string;
+  error?: string;
+  variant?: InputVariant;
+};
+
+function InputField({
+  name,
+  value,
+  onChange,
+  placeholder,
+  label,
+  error,
+  variant = 'text',
+}: InputFieldProps) {
+  const baseClass =
+    'rounded font-light text-sm placeholder:text-zinc-500 border-1 border-zinc-300';
+
+  const input =
+    variant === 'large-text' ? (
+      <textarea
+        id={name}
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={cn(baseClass, 'px-4 py-2')}
+      />
+    ) : (
+      <input
+        id={name}
+        type="text"
+        name={name}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={cn(baseClass, 'px-3 py-1.5')}
+      />
+    );
+
+  return (
+    <div className="flex flex-col gap-1.5 mb-3">
+      <label htmlFor={name} className="font-semibold text-sm">
+        {label}
+      </label>
+      {input}
+      {error && (
+        <p className="text-red-700 text-xs font-bold flex items-center">
+          <TriangleAlert className="inline-block h-4 fill-red-700 text-white" />
+          {error}
+        </p>
+      )}
+    </div>
   );
 }

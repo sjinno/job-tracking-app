@@ -67,7 +67,7 @@ export function useJobForm() {
 }
 
 const REQUIRED_FIELDS: FormField[] = ['customerName'];
-const REQUIRED_FIELD_MESSAGE = 'This field is required.';
+const REQUIRED_FIELD_MESSAGE = 'This can not be empty.';
 
 function validateFormData(data: FormData): FormErrorMap {
   const errorMap: FormErrorMap = new Map();
