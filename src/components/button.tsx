@@ -10,11 +10,9 @@ type Props = {
   className?: string;
 };
 
-const onDefaultClick = () => console.log('clicked');
-
 export function Button({
   children: label,
-  onClick = onDefaultClick,
+  onClick,
   type = 'button',
   className,
 }: Props) {
