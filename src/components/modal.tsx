@@ -22,7 +22,7 @@ export function Modal() {
 
   return (
     <Overlay className="flex justify-center items-center">
-      <Dialog>{dialog}</Dialog>
+      <Dialog className="px-12 py-6">{dialog}</Dialog>
     </Overlay>
   );
 }
