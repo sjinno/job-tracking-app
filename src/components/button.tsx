@@ -1,13 +1,29 @@
+import { ReactNode } from 'react';
+import { cn } from '../lib';
+
+type ButtonType = 'button' | 'submit' | 'reset';
+
 type Props = {
-  label: string;
+  children: ReactNode;
   onClick?: () => void;
+  type?: ButtonType;
+  className?: string;
 };
 
 const onDefaultClick = () => console.log('clicked');
 
-export function Button({ label, onClick = onDefaultClick }: Props) {
+export function Button({
+  children: label,
+  onClick = onDefaultClick,
+  type = 'button',
+  className,
+}: Props) {
   return (
-    <button className="border rounded bg-zinc-100 px-1.5" onClick={onClick}>
+    <button
+      className={cn('border rounded bg-zinc-100 px-1.5', className)}
+      onClick={onClick}
+      type={type}
+    >
       {label}
     </button>
   );
