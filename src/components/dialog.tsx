@@ -13,6 +13,7 @@ export function Dialog({ children, className }: Props) {
         'w-200 h-164.25 rounded-xl shadow-xl z-51 bg-white',
         className
       )}
+      onClick={(e) => e.stopPropagation()}
     >
       {children}
     </div>
