@@ -12,6 +12,7 @@ export function JobsBoard() {
 
   return (
     <div className="my-3">
+      <h2 className="font-bold text-2xl my-3">Jobs Board</h2>
       <Button onClick={handleClick}>Add job</Button>
     </div>
   );
