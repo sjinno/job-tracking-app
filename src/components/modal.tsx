@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useModalContext } from '../hooks';
 import { Dialog } from './dialog';
 import { Overlay } from './overlay';
+import { cn } from '../lib';
 
 export function Modal() {
   const { open, toggleOpen, dialog } = useModalContext();
@@ -18,11 +19,25 @@ export function Modal() {
     };
   }, []);
 
-  if (!open) return null;
-
   return (
-    <Overlay className="flex justify-center items-center">
-      <Dialog className="px-12 py-6">{dialog}</Dialog>
+    <Overlay
+      className={cn(
+        'flex justify-center items-center transition-opacity duration-300',
+        open
+          ? 'opacity-100 pointer-events-auto'
+          : 'opacity-0 pointer-events-none'
+      )}
+    >
+      <Dialog
+        className={cn(
+          'px-12 py-6 transition-all duration-300 transform',
+          open
+            ? 'scale-100 opacity-100 translate-y-0'
+            : 'scale-95 opacity-0 translate-y-2'
+        )}
+      >
+        {dialog}
+      </Dialog>
     </Overlay>
   );
 }
