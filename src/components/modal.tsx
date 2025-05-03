@@ -4,7 +4,7 @@ import { Dialog } from './dialog';
 import { Overlay } from './overlay';
 
 export function Modal() {
-  const { open, toggleOpen } = useModalContext();
+  const { open, toggleOpen, dialog } = useModalContext();
 
   useEffect(() => {
     const closeModalWithEscape = (e: KeyboardEvent) => {
@@ -22,7 +22,7 @@ export function Modal() {
 
   return (
     <Overlay className="flex justify-center items-center">
-      <Dialog>dialog</Dialog>
+      <Dialog>{dialog}</Dialog>
     </Overlay>
   );
 }

@@ -1,8 +1,16 @@
-import { createContext, useContext, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type ModalContextValue = {
   open: boolean;
   toggleOpen: () => void;
+  dialog: ReactNode | null;
+  onDialogChange: (node: ReactNode) => void;
 };
 
 export const ModalContext = createContext<ModalContextValue | undefined>(
@@ -11,8 +19,16 @@ export const ModalContext = createContext<ModalContextValue | undefined>(
 
 export function useModal(): ModalContextValue {
   const [open, setOpen] = useState(false);
+  const [dialog, setDialog] = useState<ReactNode | null>(null);
+
+  useEffect(() => {
+    if (!open) setDialog(null);
+  }, [open]);
+
   const toggleOpen = () => setOpen((prev) => !prev);
-  return { open, toggleOpen };
+  const onDialogChange = (node: ReactNode) => setDialog(node);
+
+  return { open, toggleOpen, dialog, onDialogChange };
 }
 
 export function useModalContext(): ModalContextValue {
