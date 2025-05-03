@@ -4,7 +4,8 @@ import { Job, JobStatus } from '../models';
 interface FormData extends Job {}
 
 type FormField = keyof FormData;
-type FormError = { field: FormField; message: string };
+type FormError = string;
+type FormErrorMap = Map<FormField, FormError>;
 
 type FormAction =
   | { type: 'changed_name'; nextName: string }
@@ -38,38 +39,38 @@ export function useJobForm() {
     reducer,
     initialState
   );
-  const [errors, setErrors] = useState<FormError[]>([]);
+  const [errors, setErrors] = useState<FormErrorMap | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const errorStack = validateFormData(state);
+    const errorMap = validateFormData(state);
 
-    if (errorStack.length === 0) {
+    if (errorMap.size === 0) {
       console.log(state);
       setSubmitted(true);
-      setErrors([]);
+      setErrors(null);
       dispatch({ type: 'reset' });
     } else {
-      setErrors(errorStack);
+      setErrors(errorMap);
     }
   };
 
   return { state, dispatch, errors, handleSubmit, submitted };
 }
 
-const REQUIRED_FIELDS: FormField[] = ['customerName', 'description'];
+const REQUIRED_FIELDS: FormField[] = ['customerName'];
 const REQUIRED_FIELD_MESSAGE = 'This field is required.';
 
-function validateFormData(data: FormData): FormError[] {
-  const errorStack: FormError[] = [];
+function validateFormData(data: FormData): FormErrorMap {
+  const errorMap: FormErrorMap = new Map();
 
   for (const field of REQUIRED_FIELDS) {
     if (data[field] === '') {
-      errorStack.push({ field, message: REQUIRED_FIELD_MESSAGE });
+      errorMap.set(field, REQUIRED_FIELD_MESSAGE);
     }
   }
 
-  return errorStack;
+  return errorMap;
 }
