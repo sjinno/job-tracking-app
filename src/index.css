@@ -1,1 +1,9 @@
 @import 'tailwindcss';
+
+:root {
+  --gh-overlay-bgColor: #c8d1da66;
+}
+
+@theme {
+  --color-overlay: var(--gh-overlay-bgColor);
+}
