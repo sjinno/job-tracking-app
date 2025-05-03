@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { Job, JobStatus } from '../models';
 
 interface FormData extends Job {}
@@ -41,6 +41,12 @@ export function useJobForm() {
   );
   const [errors, setErrors] = useState<FormErrorMap | null>(null);
   const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (errors?.has('customerName') && state.customerName !== '') {
+      errors.delete('customerName');
+    }
+  }, [state]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
