@@ -18,7 +18,10 @@ export function Button({
 }: Props) {
   return (
     <button
-      className={cn('border rounded bg-zinc-100 px-1.5', className)}
+      className={cn(
+        'border rounded bg-zinc-100 px-3 py-1 text-sm font-medium',
+        className
+      )}
       onClick={onClick}
       type={type}
     >
