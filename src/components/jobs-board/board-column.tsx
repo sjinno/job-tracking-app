@@ -2,6 +2,9 @@ import { Circle } from 'lucide-react';
 import { formatJobStatus, Job, JobStatus } from '../../models';
 import { cn } from '../../lib';
 import { JobCard } from '../job-card';
+import { useDrop } from 'react-dnd';
+import { useJobsContext } from '../../providers';
+import { useRef } from 'react';
 
 type BoardColumnProps = {
   status: JobStatus;
@@ -9,8 +12,30 @@ type BoardColumnProps = {
 };
 
 export function BoardColumn({ status, jobs }: BoardColumnProps) {
+  const { updateJob } = useJobsContext();
+
+  const dropRef = useRef<HTMLDivElement | null>(null);
+  const [{ isOver }, drop] = useDrop(() => ({
+    accept: 'JOB',
+    drop: (job: Job) => {
+      if (job.status !== status) {
+        updateJob(job.id, 'status', status);
+      }
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+    }),
+  }));
+  drop(dropRef);
+
   return (
-    <div className="w-87 bg-board-column border border-zinc-300 rounded px-5 py-2.5">
+    <div
+      className={cn(
+        'w-87 bg-board-column border border-zinc-300 rounded-lg px-5 py-2.5',
+        isOver && 'border-blue-600 border-2'
+      )}
+      ref={dropRef}
+    >
       <ColumnHeader status={status} />
       <ColumnData jobs={jobs} />
     </div>

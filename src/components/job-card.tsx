@@ -3,6 +3,7 @@ import { cn } from '../lib';
 import { formatJobStatus, Job, JobStatus, jobStatuses } from '../models';
 import { useEffect, useRef, useState } from 'react';
 import { useJobsContext } from '../providers';
+import { useDrag } from 'react-dnd';
 
 type Props = {
   job: Job;
@@ -11,8 +12,24 @@ type Props = {
 export function JobCard({ job }: Props) {
   const [open, setOpen] = useState(false);
 
+  const dragRef = useRef<HTMLDivElement | null>(null);
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'JOB',
+    item: { ...job },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+  drag(dragRef);
+
   return (
-    <div className="px-3 py-1.5 bg-white border border-zinc-300 shadow rounded-lg my-3 text-sm">
+    <div
+      className={cn(
+        'px-3 py-1.5 bg-white border border-zinc-300 shadow rounded-lg my-3 text-sm',
+        isDragging && 'border-blue-600 border-2'
+      )}
+      ref={dragRef}
+    >
       <div>
         <h3>
           <Label label="Custome Name" />
