@@ -17,7 +17,7 @@ export function JobForm() {
         onChange={(e) =>
           dispatch({ type: 'changed_name', nextName: e.target.value })
         }
-        placeholder="Title"
+        placeholder="Customer Name"
         error={errors?.get('customerName')}
         required={true}
       />
