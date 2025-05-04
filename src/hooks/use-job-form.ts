@@ -65,7 +65,6 @@ export function useJobForm() {
 
     if (errorMap.size === 0) {
       addJob({ ...state, id: uuidv4() });
-      console.log(state);
       setSubmitted(true);
       setErrors(null);
       dispatch({ type: 'reset' });
