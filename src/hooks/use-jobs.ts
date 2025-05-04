@@ -4,6 +4,7 @@ import { Job } from '../models';
 type JobsContextValue = {
   jobs: Job[];
   addJob: (job: Job) => void;
+  updateJob: <K extends keyof Job>(id: string, field: K, value: Job[K]) => void;
 };
 
 export const JobsContext = createContext<JobsContextValue | undefined>(
@@ -12,8 +13,20 @@ export const JobsContext = createContext<JobsContextValue | undefined>(
 
 export function createJobsStore(): JobsContextValue {
   const [jobs, setJobs] = useState<Job[]>([]);
+
   const addJob = (job: Job) => setJobs((prev) => [...prev, job]);
-  return { jobs, addJob };
+
+  const updateJob = <K extends keyof Job>(
+    id: string,
+    field: K,
+    value: Job[K]
+  ) => {
+    setJobs((prev) =>
+      prev.map((j) => (j.id === id ? { ...j, [field]: value } : j))
+    );
+  };
+
+  return { jobs, addJob, updateJob };
 }
 
 export function useJobsContext(): JobsContextValue {
