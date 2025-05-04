@@ -9,7 +9,7 @@ export function Modal() {
 
   useEffect(() => {
     const closeModalWithEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') toggleOpen();
+      if (e.key === 'Escape' && open) toggleOpen();
     };
 
     window.addEventListener('keydown', closeModalWithEscape);
@@ -17,7 +17,7 @@ export function Modal() {
     return () => {
       window.removeEventListener('keydown', closeModalWithEscape);
     };
-  }, []);
+  }, [open]);
 
   return (
     <Overlay
