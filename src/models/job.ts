@@ -6,6 +6,7 @@ export const jobStatusTypes = [
 export type JobStatus = (typeof jobStatusTypes)[number];
 
 export interface Job {
+  id: string;
   customerName: string;
   description: string;
   status: JobStatus;

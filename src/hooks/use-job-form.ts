@@ -2,8 +2,9 @@ import { useEffect, useReducer, useState } from 'react';
 import { Job, JobStatus } from '../models';
 import { useJobsContext } from './use-jobs';
 import { useModalContext } from './use-modal';
+import { v4 as uuidv4 } from 'uuid';
 
-interface FormData extends Job {}
+type FormData = Omit<Job, 'id'>;
 
 type FormField = keyof FormData;
 type FormError = string;
@@ -59,7 +60,7 @@ export function useJobForm() {
     const errorMap = validateFormData(state);
 
     if (errorMap.size === 0) {
-      addJob(state);
+      addJob({ ...state, id: uuidv4() });
       console.log(state);
       setSubmitted(true);
       setErrors(null);
