@@ -2,8 +2,10 @@
 
 :root {
   --gh-overlay-bgColor: #c8d1da66;
+  --gh-board-column-bgColor: #f6f8fa;
 }
 
 @theme {
   --color-overlay: var(--gh-overlay-bgColor);
+  --color-board-column: var(--gh-board-column-bgColor);
 }
