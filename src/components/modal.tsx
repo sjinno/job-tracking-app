@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useModalContext } from '../hooks';
+import { useModalContext } from '../providers';
 import { Dialog } from './dialog';
 import { Overlay } from './overlay';
 import { cn } from '../lib';

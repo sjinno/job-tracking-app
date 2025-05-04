@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useModalContext } from '../hooks';
+import { useModalContext } from '../providers';
 import { cn } from '../lib';
 
 type Props = {

@@ -1,6 +1,10 @@
 import { JobsBoard, Modal } from './components';
-import { ModalContext, useModal } from './hooks';
-import { JobsContext, createJobsStore } from './providers/jobs-provider';
+import {
+  JobsContext,
+  ModalContext,
+  createJobsStore,
+  useModal,
+} from './providers';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
