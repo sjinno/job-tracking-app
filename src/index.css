@@ -8,4 +8,16 @@
 @theme {
   --color-overlay: var(--gh-overlay-bgColor);
   --color-board-column: var(--gh-board-column-bgColor);
+
+  --color-not-yet-started: var(--color-sky-700);
+  --color-bg-not-yet-started: var(--color-sky-100);
+  --color-fill-not-yet-started: var(--color-sky-100);
+
+  --color-in-progress: var(--color-yellow-700);
+  --color-bg-in-progress: var(--color-yellow-100);
+  --color-fill-in-progress: var(--color-yellow-100);
+
+  --color-completed: var(--color-orange-700);
+  --color-bg-completed: var(--color-orange-100);
+  --color-fill-completed: var(--color-orange-100);
 }

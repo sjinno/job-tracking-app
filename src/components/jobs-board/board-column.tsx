@@ -22,9 +22,10 @@ function ColumnHeader({ status }: Pick<BoardColumnProps, 'status'>) {
     <Circle
       className={cn(
         'inline-block mr-1.5 mt-[0.0625rem] h-4',
-        status === 'not-yet-started' && 'text-sky-700 fill-sky-100',
-        status === 'in-progress' && 'text-yellow-700 fill-yellow-100',
-        status === 'completed' && 'text-orange-700 fill-orange-100'
+        status === 'not-yet-started' &&
+          'text-not-yet-started fill-bg-not-yet-started',
+        status === 'in-progress' && 'text-in-progress fill-bg-in-progress',
+        status === 'completed' && 'text-completed fill-bg-completed'
       )}
       strokeWidth={3}
     />
