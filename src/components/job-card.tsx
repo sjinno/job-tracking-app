@@ -1,7 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { cn } from '../lib';
 import { formatJobStatus, Job, JobStatus, jobStatuses } from '../models';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useJobsContext } from '../providers';
 
 type Props = {
@@ -24,7 +24,12 @@ export function JobCard({ job }: Props) {
         </p>
         <div className="flex items-center h-7">
           <Label label="Status" />
-          <div className="hover:bg-zinc-100 ml-1.5 px-1 mt-0.5 flex items-center relative">
+          <div
+            className={cn(
+              'ml-1.5 px-1 mt-0.5 flex items-center relative',
+              !open && 'hover:bg-zinc-100'
+            )}
+          >
             <div
               className="cursor-pointer"
               onClick={() => setOpen((prev) => !prev)}
@@ -32,7 +37,11 @@ export function JobCard({ job }: Props) {
               <Status status={job.status} />
               <ChevronDown className="inline-block h-2.5" strokeWidth={5} />
             </div>
-            <SelectPanel job={job} open={open} />
+            <SelectPanel
+              job={job}
+              open={open}
+              closePanel={() => setOpen(false)}
+            />
           </div>
         </div>
       </div>
@@ -64,23 +73,56 @@ function Status({ status }: { status: JobStatus }) {
   );
 }
 
-function SelectPanel({ job, open }: { job: Job; open: boolean }) {
+function SelectPanel({
+  job,
+  open,
+  closePanel,
+}: {
+  job: Job;
+  open: boolean;
+  closePanel: () => void;
+}) {
   const { updateJob } = useJobsContext();
+  const otherStatuses = jobStatuses.filter((s) => s !== job.status);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
-  const otherStatuses = jobStatuses.filter((s) => s !== status);
+  useEffect(() => {
+    const closeOnEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closePanel();
+    };
+
+    const closeOnClickOutside = (e: PointerEvent) => {
+      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        closePanel();
+      }
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    document.addEventListener('pointerdown', closeOnClickOutside);
+
+    return () => {
+      window.removeEventListener('keydown', closeOnEscape);
+      document.removeEventListener('pointerdown', closeOnClickOutside);
+    };
+  }, []);
 
   return (
     <div
       className={cn(
-        'absolute left-0 top-7 w-42 bg-white rounded-lg border border-zinc-300 transition-all px-3 py-1.5 my-1.5',
+        'absolute left-0 top-7 w-42 bg-white rounded-lg border border-zinc-300 transition-all px-3 py-1.5 my-1.5 z-49',
         open ? 'opacity-100 max-h-100' : 'opacity-0 max-h-0'
       )}
+      ref={panelRef}
     >
       {otherStatuses.map((s) => (
         <div
           key={s}
           className="hover:bg-zinc-100 px-1 mb-0.5 rounded cursor-pointer"
-          onClick={() => updateJob(job.id, 'status', s)}
+          onClick={() => {
+            updateJob(job.id, 'status', s);
+            closePanel();
+          }}
+          onBlur={() => closePanel()}
         >
           <Status status={s} />
         </div>
