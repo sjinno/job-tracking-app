@@ -1,10 +1,10 @@
 import { JobsBoard, Modal } from './components';
 import { ModalContext, useModal } from './hooks';
-import { JobsContext, useJobs } from './hooks/use-jobs';
+import { JobsContext, createJobsStore } from './hooks/use-jobs';
 
 function App() {
   const modalState = useModal();
-  const jobsState = useJobs();
+  const jobsState = createJobsStore();
 
   return (
     <>

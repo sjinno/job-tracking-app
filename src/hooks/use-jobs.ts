@@ -10,7 +10,7 @@ export const JobsContext = createContext<JobsContextValue | undefined>(
   undefined
 );
 
-export function useJobs(): JobsContextValue {
+export function createJobsStore(): JobsContextValue {
   const [jobs, setJobs] = useState<Job[]>([]);
   const addJob = (job: Job) => setJobs((prev) => [...prev, job]);
   return { jobs, addJob };
