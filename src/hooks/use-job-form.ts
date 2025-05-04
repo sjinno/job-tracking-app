@@ -49,9 +49,13 @@ export function useJobForm() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    if (errors?.has('customerName') && state.customerName !== '') {
-      errors.delete('customerName');
-    }
+    if (!errors) return;
+
+    REQUIRED_FIELDS.forEach((field) => {
+      if (errors.has(field) && state[field] !== '') {
+        errors.delete(field);
+      }
+    });
   }, [state]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -74,7 +78,7 @@ export function useJobForm() {
   return { state, dispatch, errors, handleSubmit, submitted };
 }
 
-const REQUIRED_FIELDS: FormField[] = ['customerName'];
+const REQUIRED_FIELDS: FormField[] = ['customerName', 'description'];
 const REQUIRED_FIELD_MESSAGE = 'This can not be empty.';
 
 function validateFormData(data: FormData): FormErrorMap {

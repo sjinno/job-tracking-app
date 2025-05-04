@@ -28,6 +28,7 @@ export function JobForm() {
           dispatch({ type: 'changed_desc', nextDesc: e.target.value })
         }
         placeholder="Type your description here..."
+        error={errors?.get('description')}
         variant="large-text"
       />
       <Button type="submit" className="bg-green-700 text-white border-none">
