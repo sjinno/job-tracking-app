@@ -52,7 +52,10 @@ export function JobCard({ job }: Props) {
               onClick={() => setOpen((prev) => !prev)}
             >
               <Status status={job.status} />
-              <ChevronDown className="inline-block h-2.5" strokeWidth={5} />
+              <ChevronDown
+                className="inline-block h-2.5 -mt-0.5"
+                strokeWidth={5}
+              />
             </div>
             <SelectPanel
               job={job}
@@ -76,7 +79,7 @@ function Status({ status }: { status: JobStatus }) {
   return (
     <button
       className={cn(
-        'border-1 rounded-3xl px-2 font-semibold my-1 text-xs',
+        'border-1 rounded-3xl px-2 font-semibold text-xs',
         status === 'not-yet-started' &&
           'border-not-yet-started/50 bg-bg-not-yet-started text-not-yet-started',
         status === 'in-progress' &&
@@ -126,7 +129,7 @@ function SelectPanel({
   return (
     <div
       className={cn(
-        'absolute left-0 top-7 w-42 bg-white rounded-lg border border-zinc-300 transition-all px-3 py-1.5 my-1.5 z-49',
+        'absolute left-0 top-7 w-42 bg-white rounded-lg border border-zinc-300 transition-all px-3 py-2 pb-1 my-1.5 z-49',
         open ? 'opacity-100 max-h-100' : 'opacity-0 max-h-0'
       )}
       ref={panelRef}
@@ -134,7 +137,7 @@ function SelectPanel({
       {otherStatuses.map((s) => (
         <div
           key={s}
-          className="hover:bg-zinc-100 px-1 mb-0.5 rounded cursor-pointer"
+          className="hover:bg-zinc-100 p-1 rounded cursor-pointer flex items-center mb-1"
           onClick={() => {
             updateJob(job.id, 'status', s);
             closePanel();
