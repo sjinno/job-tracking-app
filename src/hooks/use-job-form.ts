@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from 'react';
 import { Job, JobStatus } from '../models';
-import { useJobsContext } from './use-jobs';
+import { useJobsContext } from '../providers/jobs-provider';
 import { useModalContext } from './use-modal';
 import { v4 as uuidv4 } from 'uuid';
 

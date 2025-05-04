@@ -1,9 +1,10 @@
-import { useModalContext, useJobsContext } from '../../hooks';
+import { useModalContext } from '../../hooks';
 import { Button } from '../button';
 import { JobForm } from '../job-form';
 import { useMemo } from 'react';
 import { Job, JobStatus } from '../../models';
 import { BoardColumn } from './board-column';
+import { useJobsContext } from '../../providers';
 
 export function JobsBoard() {
   const { toggleOpen, onDialogChange } = useModalContext();

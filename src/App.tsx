@@ -1,6 +1,6 @@
 import { JobsBoard, Modal } from './components';
 import { ModalContext, useModal } from './hooks';
-import { JobsContext, createJobsStore } from './hooks/use-jobs';
+import { JobsContext, createJobsStore } from './providers/jobs-provider';
 
 function App() {
   const modalState = useModal();
