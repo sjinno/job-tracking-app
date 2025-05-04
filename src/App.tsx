@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-      <main className="px-24 py-12">
+      <main className="px-24 pt-12 pb-4 min-h-svh flex flex-col w-320 mx-auto">
         <ModalContext.Provider value={modalState}>
           <JobsContext.Provider value={jobsState}>
             <h1 className="text-3xl font-bold">Job Tracking App</h1>
