@@ -44,7 +44,7 @@ function ColumnData({ jobs }: Pick<BoardColumnProps, 'jobs'>) {
   return (
     <div>
       {jobs.map((job) => (
-        <JobCard job={job} />
+        <JobCard key={job.id} job={job} />
       ))}
     </div>
   );
