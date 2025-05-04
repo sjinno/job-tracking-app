@@ -2,6 +2,7 @@ import { ChevronDown } from 'lucide-react';
 import { cn } from '../lib';
 import { formatJobStatus, Job, JobStatus, jobStatuses } from '../models';
 import { useState } from 'react';
+import { useJobsContext } from '../providers';
 
 type Props = {
   job: Job;
@@ -31,7 +32,7 @@ export function JobCard({ job }: Props) {
               <Status status={job.status} />
               <ChevronDown className="inline-block h-2.5" strokeWidth={5} />
             </div>
-            <SelectPanel status={job.status} open={open} />
+            <SelectPanel job={job} open={open} />
           </div>
         </div>
       </div>
@@ -63,7 +64,9 @@ function Status({ status }: { status: JobStatus }) {
   );
 }
 
-function SelectPanel({ status, open }: { status: JobStatus; open: boolean }) {
+function SelectPanel({ job, open }: { job: Job; open: boolean }) {
+  const { updateJob } = useJobsContext();
+
   const otherStatuses = jobStatuses.filter((s) => s !== status);
 
   return (
@@ -77,6 +80,7 @@ function SelectPanel({ status, open }: { status: JobStatus; open: boolean }) {
         <div
           key={s}
           className="hover:bg-zinc-100 px-1 mb-0.5 rounded cursor-pointer"
+          onClick={() => updateJob(job.id, 'status', s)}
         >
           <Status status={s} />
         </div>
