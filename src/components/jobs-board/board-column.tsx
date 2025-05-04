@@ -31,7 +31,7 @@ export function BoardColumn({ status, jobs }: BoardColumnProps) {
   return (
     <div
       className={cn(
-        'w-87 bg-board-column border border-zinc-300 rounded-lg px-5 py-2.5',
+        'w-87 bg-board-column border border-zinc-300 rounded-lg px-2.5 py-1',
         isOver && 'border-blue-600 border-2'
       )}
       ref={dropRef}
