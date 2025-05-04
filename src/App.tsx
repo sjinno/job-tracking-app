@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <main className="px-24 pt-12 pb-4 min-h-svh flex flex-col w-320 mx-auto">
+      <main className="px-6 xl:px-24 pt-12 pb-4 min-h-svh flex flex-col w-320 mx-auto">
         <DndProvider backend={HTML5Backend}>
           <ModalContext.Provider value={modalState}>
             <JobsContext.Provider value={jobsState}>
