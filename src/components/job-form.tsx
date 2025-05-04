@@ -1,4 +1,4 @@
-import { TriangleAlert } from 'lucide-react';
+import { Asterisk, TriangleAlert } from 'lucide-react';
 import { useJobForm } from '../hooks';
 import { cn } from '../lib';
 import { ChangeEventHandler } from '../types';
@@ -19,6 +19,7 @@ export function JobForm() {
         }
         placeholder="Title"
         error={errors?.get('customerName')}
+        required={true}
       />
       <InputField
         label="Add a description"
@@ -30,6 +31,7 @@ export function JobForm() {
         placeholder="Type your description here..."
         error={errors?.get('description')}
         variant="large-text"
+        required={true}
       />
       <Button type="submit" className="bg-green-700 text-white border-none">
         Create
@@ -51,6 +53,7 @@ type InputFieldProps = InputProps & {
   label: string;
   error?: string;
   variant?: InputVariant;
+  required?: boolean;
 };
 
 function InputField({
@@ -61,6 +64,7 @@ function InputField({
   label,
   error,
   variant = 'text',
+  required,
 }: InputFieldProps) {
   const baseClass =
     'rounded font-light text-sm placeholder:text-zinc-500 border-1 border-zinc-300';
@@ -87,11 +91,18 @@ function InputField({
       />
     );
 
+  const asterisk = (
+    <Asterisk className="inline text-red-600 h-2 -ml-1 -mt-2" strokeWidth={3} />
+  );
+
   return (
     <div className="flex flex-col gap-1.5 mb-3">
-      <label htmlFor={name} className="font-semibold text-sm">
-        {label}
-      </label>
+      <div>
+        <label htmlFor={name} className="font-semibold text-sm">
+          {label}
+        </label>
+        {required && asterisk}
+      </div>
       {input}
       {error && (
         <p className="text-red-700 text-xs font-bold flex items-center">
