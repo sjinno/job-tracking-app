@@ -1,7 +1,7 @@
 import { capitalize } from '../utils';
 
 export const jobStatuses = [
-  'not-yet-completed',
+  'not-yet-started',
   'in-progress',
   'completed',
 ] as const;

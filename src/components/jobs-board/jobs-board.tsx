@@ -11,7 +11,7 @@ export function JobsBoard() {
 
   const jobsByStatus = useMemo(() => {
     const record: Record<JobStatus, Job[]> = {
-      'not-yet-completed': [],
+      'not-yet-started': [],
       'in-progress': [],
       completed: [],
     };

@@ -19,7 +19,7 @@ type FormAction =
 const initialState: FormData = {
   customerName: '',
   description: '',
-  status: 'not-yet-completed',
+  status: 'not-yet-started',
 };
 
 function reducer(state: FormData, action: FormAction): FormData {
