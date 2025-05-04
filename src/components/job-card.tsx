@@ -32,7 +32,7 @@ export function JobCard({ job }: Props) {
     >
       <div>
         <h3>
-          <Label label="Custome Name" />
+          <Label label="Customer Name" />
           {job.customerName}
         </h3>
         <p>
