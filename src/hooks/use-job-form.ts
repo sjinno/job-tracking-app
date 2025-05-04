@@ -1,5 +1,7 @@
 import { useEffect, useReducer, useState } from 'react';
 import { Job, JobStatus } from '../models';
+import { useJobsContext } from './use-jobs';
+import { useModalContext } from './use-modal';
 
 interface FormData extends Job {}
 
@@ -35,6 +37,9 @@ function reducer(state: FormData, action: FormAction): FormData {
 }
 
 export function useJobForm() {
+  const { toggleOpen } = useModalContext();
+  const { addJob } = useJobsContext();
+
   const [state, dispatch] = useReducer<FormData, [action: FormAction]>(
     reducer,
     initialState
@@ -54,10 +59,12 @@ export function useJobForm() {
     const errorMap = validateFormData(state);
 
     if (errorMap.size === 0) {
+      addJob(state);
       console.log(state);
       setSubmitted(true);
       setErrors(null);
       dispatch({ type: 'reset' });
+      toggleOpen();
     } else {
       setErrors(errorMap);
     }
