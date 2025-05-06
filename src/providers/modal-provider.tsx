@@ -17,7 +17,7 @@ export const ModalContext = createContext<ModalContextValue | undefined>(
   undefined
 );
 
-export function useModal(): ModalContextValue {
+function createModalStore(): ModalContextValue {
   const [open, setOpen] = useState(false);
   const [dialog, setDialog] = useState<ReactNode | null>(null);
 
@@ -39,4 +39,11 @@ export function useModalContext(): ModalContextValue {
     );
   }
   return context;
+}
+
+export function ModalProvider({ children }: { children: ReactNode }) {
+  const context = createModalStore();
+  return (
+    <ModalContext.Provider value={context}>{children}</ModalContext.Provider>
+  );
 }

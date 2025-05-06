@@ -7,11 +7,9 @@ type JobsContextValue = {
   updateJob: <K extends keyof Job>(id: string, field: K, value: Job[K]) => void;
 };
 
-export const JobsContext = createContext<JobsContextValue | undefined>(
-  undefined
-);
+const JobsContext = createContext<JobsContextValue | undefined>(undefined);
 
-export function createJobsStore(): JobsContextValue {
+function createJobsContext(): JobsContextValue {
   const [jobs, setJobs] = useState<Job[]>([]);
 
   const addJob = (job: Job) => setJobs((prev) => [...prev, job]);
@@ -37,4 +35,9 @@ export function useJobsContext(): JobsContextValue {
     );
   }
   return context;
+}
+
+export function JobsProvider({ children }: { children: React.ReactNode }) {
+  const value = createJobsContext();
+  return <JobsContext.Provider value={value}>{children}</JobsContext.Provider>;
 }
